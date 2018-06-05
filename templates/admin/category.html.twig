@@ -3,9 +3,9 @@
 {% block body %}
     <div class="container">
         <p>
-            <a href="{{ path('faq-admin-new') }}" class="btn btn-success">Add new FAQ</a>
+            <a href="{{ path('faq-category-admin-new') }}" class="btn btn-success">Add new FAQ</a>
         </p>
-        <table class="table table-striped sortable">
+        <table>
             <thead>
             <tr class="text-center">
                 <td>Id</td>
@@ -13,11 +13,11 @@
                 <td colspan="2">Action</td>
             </tr>
             </thead>
-            <tbody class="sortable">
-            {% for faq in faqs %}
+            <tbody>
+            {% for faqCategory in faqCategories %}
                 <tr>
-                    <td>{{ faq.id }}</td>
-                    <td>{{ faq.question }}</td>
+                    <td>{{ faqCategory.id }}</td>
+                    <td>{{ faqCategory.name }}</td>
                     <td>
                         <a href="#" class="btn btn-primary">Edit</a>
                     </td>
@@ -33,12 +33,6 @@
 
 {% block js %}
 <script>
-    $('.sortable').sortable({
-        change(event, ui) {
-            const position = ui.placeholder.index();
-            console.log(ui.item[0].firstElementChild.textContent);
-            console.log(position);
-        }
-    });
+    $( "tbody" ).sortable();
 </script>
 {% endblock %}

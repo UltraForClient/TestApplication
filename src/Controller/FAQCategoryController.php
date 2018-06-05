@@ -1,19 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
-use App\Entity\FAQ;
 use App\Entity\FAQCategory;
 use App\Form\FAQType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Doctrine\ORM\EntityManagerInterface;
 
-class FAQAdminController extends Controller
+class FAQCategoryController extends Controller
 {
     private $em;
 
@@ -23,44 +21,38 @@ class FAQAdminController extends Controller
     }
 
     /**
-     * @Route("/admin/faq", name="faq-admin")
+     * @Route("/admin/faq-category", name="faq-category-admin")
      */
     public function index(): Response
     {
-        $faqs = $this->em->getRepository(FAQ::class)->findAll();
+        $faqCategories = $this->em->getRepository(FAQCategory::class)->findAll();
 
         return $this->render('admin/faq.html.twig', [
-            'faqs' => $faqs
+            'faqCategories' => $faqCategories
         ]);
     }
 
     /**
-     * @Route("/admin/faq/new", name="faq-admin-new")
+     * @Route("/admin/faq-category/new", name="faq-category-admin-new")
      */
     public function new(Request $request): Response
     {
-        $faq = new FAQ();
+        $faqCategories = new FAQCategory();
 
-        $form = $this->createForm(FAQType::class, $faq);
+        $form = $this->createForm(FAQType::class, $faqCategories);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $category = $this->em->getRepository(FAQCategory::class)->find($request->request->get('categories'));
 
-            $faq->setCategory($category);
-
-            $this->em->persist($faq);
+            $this->em->persist($faqCategories);
             $this->em->flush();
 
-            return $this->redirectToRoute('faq-admin');
+            return $this->redirectToRoute('faq-category-admin');
         }
 
-        $categories = $this->em->getRepository(FAQCategory::class)->findAll();
-
         return $this->render('admin/new.html.twig', [
-            'form' => $form->createView(),
-            'categories' => $categories
+            'form' => $form->createView()
         ]);
     }
 
