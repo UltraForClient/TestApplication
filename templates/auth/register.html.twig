@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(form, {'action': path('register'), 'method': 'post'}) }}
+    <div>
+        {{ form_label(form.username, 'Username') }}
+        {{ form_widget(form.username, { 'attr': {
+            'placeholder': 'Username',
+        }}) }}
+    </div>
+    <div>
+        {{ form_label(form.name, 'Name') }}
+        {{ form_widget(form.name, { 'attr': {
+            'placeholder': 'Name',
+        }}) }}
+    </div>
+    <div>
+        {{ form_label(form.surname, 'Surname') }}
+        {{ form_widget(form.surname, { 'attr': {
+            'placeholder': 'Surname'
+        }}) }}
+    </div>
+    <div>
+        {{ form_label(form.email, 'E-mail') }}
+        {{ form_widget(form.email, { 'attr': {
+            'placeholder': 'E-mail'
+        }}) }}
+    </div>
+    <div>
+        {{ form_label(form.plainPassword.first, 'Password') }}
+        {{ form_widget(form.plainPassword.first, { 'attr': {
+            'placeholder': 'Password'
+        }}) }}
+    </div>
+    <div>
+        {{ form_label(form.plainPassword.second, 'Repeat password') }}
+        {{ form_widget(form.plainPassword.second, { 'attr': {
+            'placeholder': 'Repeat password'
+        }}) }}
+    </div>
+    <button type="submit">Register</button>
+    {{ form_end(form) }}
+{% endblock %}
