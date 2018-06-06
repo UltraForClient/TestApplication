@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FAQRepository")
@@ -36,10 +37,11 @@ class FAQ
      */
     private $enable = true;
 
-//    /**
-//     * @ORM\Column(name="number", type="integer")
-//     */
-//    private $number;
+    /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
 
     /**
      * @ORM\ManyToOne(targetEntity="FAQCategory", inversedBy="faqs")
@@ -111,15 +113,15 @@ class FAQ
         $this->enable = $enable;
     }
 
-//    public function getNumber(): ?int
-//    {
-//        return $this->number;
-//    }
-//
-//    public function setNumber(int $number): void
-//    {
-//        $this->number = $number;
-//    }
+    public function setPosition(int $position): void
+    {
+        $this->position = $position;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
 
     public function getCategory(): ?FAQCategory
     {

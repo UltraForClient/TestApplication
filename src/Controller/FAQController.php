@@ -7,6 +7,7 @@ use App\Entity\FAQ;
 use App\Entity\FAQCategory;
 use App\Form\FAQType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -26,11 +27,27 @@ class FAQController extends Controller
      */
     public function index(): Response
     {
-        $faqs = $this->em->getRepository(FAQ::class)->findAll();
+        $faqs = $this->em->getRepository(FAQ::class)->findAllByPosition();
 
         return $this->render('admin/faq.html.twig', [
             'faqs' => $faqs
         ]);
+    }
+
+    /**
+     * @Route(
+     *     "/admin/faq/change-position/{id}/{position}",
+     *     name="faq-admin-change-position",
+     *     methods={"POST"},
+     *     requirements={"id": "[1-9]\d*", "position": "[0-9]\d*"}
+     * )
+     */
+    public function changePosition(FAQ $faq, int $position): JsonResponse
+    {
+        $faq->setPosition($position);
+        $this->em->flush();
+
+        return $this->json('Changed position');
     }
 
     /**
@@ -57,10 +74,12 @@ class FAQController extends Controller
 
         $categories = $this->em->getRepository(FAQCategory::class)->findAll();
 
-        return $this->render('admin/new.html.twig', [
+        return $this->render('admin/newFaq.html.twig', [
             'form' => $form->createView(),
             'categories' => $categories
         ]);
     }
+
+    
 
 }

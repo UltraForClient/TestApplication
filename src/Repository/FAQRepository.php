@@ -19,4 +19,12 @@ class FAQRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, FAQ::class);
     }
+
+    public function findAllByPosition()
+    {
+        return $this->createQueryBuilder('f')
+            ->orderBy('f.position')
+            ->getQuery()
+            ->getResult();
+    }
 }

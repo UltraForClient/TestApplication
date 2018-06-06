@@ -35,9 +35,24 @@
 <script>
     $('.sortable').sortable({
         change(event, ui) {
+            const id = ui.item[0].firstElementChild.textContent;
             const position = ui.placeholder.index();
-            console.log(ui.item[0].firstElementChild.textContent);
-            console.log(position);
+            const url = 'http://127.0.0.1:8000/admin/faq/change-position/' + id + '/' + position;
+
+            const fd = new FormData();
+
+            const req =  new Request(url, {
+                method:      'POST',
+                body:        fd,
+                mode:        'cors',
+                credentials: 'include'
+            });
+
+            fetch(req)
+                .then(response => response.json())
+                .then(result   => result)
+                .catch(error   => console.error(error))
+            ;
         }
     });
 </script>
