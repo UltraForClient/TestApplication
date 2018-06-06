@@ -1,5 +1,6 @@
 parameters:
     locale: 'en'
+    app.path.images: '/uploads/images'
 
 services:
     _defaults:

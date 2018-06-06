@@ -22,21 +22,33 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
+                            {% if app.user %}
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ path('profile') }}">{{ app.user.name }} {{ app.user.surname }}</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+                            </li>
+                            {% endif %}
                             {#<li class="nav-item">#}
                                 {#<a class="nav-link" href="{{ path('faq') }}">FAQ</a>#}
                             {#</li>#}
+                            {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ path('faq-admin') }}">Admin FAQ</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ path('faq-category-admin') }}">Admin Category</a>
                             </li>
+                            {% endif %}
+                            {% if not app.user %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('login') }}">Login</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('register') }}">Register</a>
                             </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

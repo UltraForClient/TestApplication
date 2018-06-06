@@ -12,8 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/login", name="login")
-     * @Method("GET")
+     * @Route("/login", name="login", methods={"GET", "POST"})
      */
     public function login(AuthenticationUtils $authUtils): Response
     {
@@ -31,8 +30,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/logout", name="logout")
-     * @Method("GET")
+     * @Route("/logout", name="logout", methods={"GET"})
      */
     public function logout(): void
     {

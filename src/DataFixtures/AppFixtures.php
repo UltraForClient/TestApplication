@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
 
     private function loadUsers(ObjectManager $em): void
     {
-        for($i = 0; $i < 15; $i++) {
+        for($i = 1; $i <= 9; $i++) {
             $user = new User();
             $user->setUsername('user_name' . $i);
             $user->setName($this->faker->firstName);
@@ -43,6 +43,15 @@ class AppFixtures extends Fixture
 
             $em->persist($user);
         }
+
+        $admin = new User();
+        $admin->setUsername('admin');
+        $admin->setName($this->faker->firstName);
+        $admin->setSurname($this->faker->lastName);
+        $admin->setEmail('admin@gmail.com');
+        $admin->setPassword($this->passwordEncoder->encodePassword($user, 'admin'));
+
+        $em->persist($admin);
 
         $em->flush();
     }

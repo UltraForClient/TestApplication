@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\Auth;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\RegisterType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,8 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class RegisterController extends Controller
 {
     /**
-     * @Route("/register", name="register")
-     * @Method("GET")
+     * @Route("/register", name="register", methods={"GET", "POST"})
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -26,7 +25,7 @@ class RegisterController extends Controller
 
         $user = new User();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegisterType::class, $user);
 
         $form->handleRequest($request);
 

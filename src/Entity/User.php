@@ -4,11 +4,14 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @Vich\Uploadable
  */
 class User implements UserInterface, \Serializable
 {
@@ -24,6 +27,7 @@ class User implements UserInterface, \Serializable
      * @Assert\NotBlank
      */
     private $username;
+
     /**
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\NotBlank
@@ -44,6 +48,16 @@ class User implements UserInterface, \Serializable
     private $surname;
 
     /**
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="avatar", fileNameProperty="image")
+     */
+    private $imageFile;
+
+    /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
@@ -51,7 +65,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(name="password", type="string", length=64)
-     * @Assert\NotBlank
      */
     private $password;
 
@@ -128,6 +141,26 @@ class User implements UserInterface, \Serializable
     public function setSurname(string $surname): void
     {
         $this->surname = $surname;
+    }
+
+    public function setImage(?string $image = null): void
+    {
+        $this->image = $image;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImageFile(File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
     }
 
     public function setPlainPassword(string $plainPassword): void

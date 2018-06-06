@@ -12,23 +12,45 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class RegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('name', TextType::class)
-            ->add('surname', TextType::class)
+            ->add('username', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('email', EmailType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('surname', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options'  => [
-                    'label' => 'Password'
+                    'label' => 'Password',
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password'
+                    'label' => 'Repeat Password',
+                    'attr' => [
+                        'class' => 'form-control'
                     ]
+                ]
             ])
         ;
     }
