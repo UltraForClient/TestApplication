@@ -32,7 +32,7 @@ class FAQCategoryController extends Controller
      */
     public function index(): Response
     {
-        $faqCategories = $this->em->getRepository(FAQCategory::class)->findAll();
+        $faqCategories = $this->em->getRepository(FAQCategory::class)->findAllByPosition();
 
         return $this->render('admin/category.html.twig', [
             'faqCategories' => $faqCategories

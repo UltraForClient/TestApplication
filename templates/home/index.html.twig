@@ -1,5 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="container">
+    <p class="alert alert-info" role="alert">
+        This is FAQ category list, click and dropdown
+    </p>
+    <div class="panel-group" id="faqCategories">
+        {% for faqCategory in faqCategories %}
+            <div class="panel panel-default ">
+                <div class="panel-heading accordion-toggle question-toggle collapsed" data-toggle="collapse" data-parent="#faqCategories" data-target="#category{{ faqCategory.id }}">
+                    <h4 class="panel-title">
+                        <a href="#" class="ing">{{ faqCategory.name }}</a>
+                    </h4>
 
+                </div>
+                <div id="category{{ faqCategory.id }}" class="panel-collapse collapse" style="height: 0;">
+                    <div class="panel-body">
+                        <ul class="list-group">
+                        {% for faq in faqCategory.faqs %}
+                            <div class="panel panel-default list-group-item">
+                                <div class="panel-heading accordion-toggle question-toggle collapsed" data-toggle="collapse" data-parent="#faqAccordion" data-target="#question{{ faq.id }}">
+                                    <h4 class="panel-title">
+                                        <a href="#" class="ing">{{ faq.question }}</a>
+                                    </h4>
+
+                                </div>
+                                <div id="question{{ faq.id }}" class="panel-collapse collapse" style="height: 0;">
+                                    <div class="panel-body">
+                                        <h5><span class="label label-primary">Answer</span></h5>
+                                        <p>
+                                            {{ faq.answer }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

@@ -50,6 +50,7 @@ class AppFixtures extends Fixture
         $admin->setSurname($this->faker->lastName);
         $admin->setEmail('admin@gmail.com');
         $admin->setPassword($this->passwordEncoder->encodePassword($user, 'admin'));
+        $admin->setRoles(['ROLE_ADMIN']);
 
         $em->persist($admin);
 

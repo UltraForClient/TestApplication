@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\FAQCategory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,12 @@ class HomeController extends Controller
      */
     public function index(): Response
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $faqCategories = $em->getRepository(FAQCategory::class)->findAllByPosition();
+
         return $this->render('home/index.html.twig', [
+            'faqCategories' => $faqCategories
         ]);
     }
 

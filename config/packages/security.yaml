@@ -3,7 +3,7 @@ security:
         App\Entity\User: bcrypt
     role_hierarchy:
         ROLE_USER:  ROLE_USER
-        ROLE_ADMIN: ROLE_ADMIN
+        ROLE_ADMIN: [ROLE_USER, ROLE_ADMIN]
 
     providers:
         database_users:
@@ -29,5 +29,6 @@ security:
                 target: home
 
     access_control:
-        - { path: ^/,      role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, role: ROLE_ADMIN }
+        - { path: ^/profile, role: ROLE_USER }
+        - { path: ^/admin,   role: ROLE_ADMIN }
+        - { path: ^/,        role: IS_AUTHENTICATED_ANONYMOUSLY }

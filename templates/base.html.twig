@@ -30,9 +30,6 @@
                                 <a class="nav-link" href="{{ path('logout') }}">Logout</a>
                             </li>
                             {% endif %}
-                            {#<li class="nav-item">#}
-                                {#<a class="nav-link" href="{{ path('faq') }}">FAQ</a>#}
-                            {#</li>#}
                             {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ path('faq-admin') }}">Admin FAQ</a>
@@ -54,11 +51,6 @@
                 </div>
             </nav>
         </header>
-        {% if true %}
-            <p class="text-info text-center">
-                Drag and Drop Sorting
-            </p>
-        {% endif %}
         {% block body %}{% endblock %}
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
