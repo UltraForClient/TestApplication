@@ -35,7 +35,7 @@ class FAQ
     /**
      * @ORM\Column(name="enable", type="boolean")
      */
-    private $enable = true;
+    private $enable;
 
     /**
      * @Gedmo\SortablePosition
@@ -68,6 +68,7 @@ class FAQ
     {
         $this->publishedAt = new \DateTime();
         $this->updatedAt   = new \DateTime();
+        $this->enable = true;
     }
 
     /**

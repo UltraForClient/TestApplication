@@ -56,4 +56,5 @@ class FAQCategoryController extends Controller
         ]);
     }
 
+    
 }

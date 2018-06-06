@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @Route("/admin/faq")
+ */
 class FAQController extends Controller
 {
     private $em;
@@ -23,7 +26,7 @@ class FAQController extends Controller
     }
 
     /**
-     * @Route("/admin/faq", name="faq-admin")
+     * @Route("/", name="faq-admin")
      */
     public function index(): Response
     {
@@ -36,8 +39,8 @@ class FAQController extends Controller
 
     /**
      * @Route(
-     *     "/admin/faq/change-position/{id}/{position}",
-     *     name="faq-admin-change-position",
+     *     "/change-position/{id}/{position}",
+     *     name="faq-change-position",
      *     methods={"POST"},
      *     requirements={"id": "[1-9]\d*", "position": "[0-9]\d*"}
      * )
@@ -51,7 +54,7 @@ class FAQController extends Controller
     }
 
     /**
-     * @Route("/admin/faq/new", name="faq-admin-new")
+     * @Route("/new", name="faq-new")
      */
     public function new(Request $request): Response
     {
@@ -80,6 +83,28 @@ class FAQController extends Controller
         ]);
     }
 
-    
+    /**
+     * @Route("/edit/{id}", requirements={"id": "\d+"}, methods={"GET", "POST"}, name="faq-edit")
+     */
+    public function edit(Request $request, FAQ $faq): Response
+    {
+        $form = $this->createForm(FAQType::class, $faq);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+
+            return $this->redirectToRoute('faq-admin');
+        }
+
+        $categories = $this->em->getRepository(FAQCategory::class)->findAll();
+
+        return $this->render('admin/editFaq.html.twig', [
+            'faq' => $faq,
+            'form' => $form->createView(),
+            'categories' => $categories
+        ]);
+    }
 
 }

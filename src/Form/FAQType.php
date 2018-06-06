@@ -25,12 +25,6 @@ class FAQType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('enable', CheckboxType::class, [
-                'attr' => [
-                    'class' => 'form-check-label'
-                ],
-                'label' => false
-            ])
         ;
     }
 

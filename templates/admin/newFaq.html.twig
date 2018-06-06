@@ -10,10 +10,6 @@
             {{ form_row(form.answer) }}
         </div>
         <div class="form-group">
-            {{ form_label(form.enable, 'Enable', { 'label_attr': {'class': 'form-check-input'} }) }}
-            {{ form_row(form.enable) }}
-        </div>
-        <div class="form-group">
             <label for="categories">Categories</label>
             <select class="form-control" id="categories" name="categories">
                 {% for category in categories %}
