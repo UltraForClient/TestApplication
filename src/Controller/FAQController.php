@@ -54,6 +54,22 @@ class FAQController extends Controller
     }
 
     /**
+     * @Route(
+     *     "/enable/{id}",
+     *     name="faq-enable",
+     *     methods={"POST"},
+     *     requirements={"id": "[1-9]\d*"}
+     * )
+     */
+    public function enable(FAQ $faq): JsonResponse
+    {
+        $faq->setEnable(!$faq->getEnable());
+        $this->em->flush();
+
+        return $this->json('Enable');
+    }
+
+    /**
      * @Route("/new", name="faq-new")
      */
     public function new(Request $request): Response
@@ -107,4 +123,15 @@ class FAQController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/delete/{id}", requirements={"id": "\d+"}, name="faq-delete")
+     */
+    public function delete(FAQ $faq): Response
+    {
+        $faq->setDeletedAt(new \DateTime());
+
+        $this->em->flush();
+
+        return $this->redirectToRoute('faq-admin');
+    }
 }

@@ -68,7 +68,7 @@ class FAQ
     {
         $this->publishedAt = new \DateTime();
         $this->updatedAt   = new \DateTime();
-        $this->enable = true;
+        $this->enable      = true;
     }
 
     /**

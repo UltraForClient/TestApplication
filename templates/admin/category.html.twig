@@ -3,23 +3,25 @@
 {% block body %}
     <div class="container">
         <p>
-            <a href="{{ path('faq-category-admin-new') }}" class="btn btn-success">Add new FAQ</a>
+            <a href="{{ path('faq-category-admin-new') }}" class="btn btn-success">Add new category</a>
         </p>
-        <table>
+        <table class="table table-striped">
             <thead>
-            <tr class="text-center">
-                <td>Id</td>
-                <td>Question</td>
-                <td colspan="2">Action</td>
-            </tr>
+                <tr class="text-center">
+                    <td>Id</td>
+                    <td>Name</td>
+                    <td>Enabled</td>
+                    <td colspan="2">Action</td>
+                </tr>
             </thead>
-            <tbody>
+            <tbody class="sortable">
             {% for faqCategory in faqCategories %}
                 <tr>
                     <td>{{ faqCategory.id }}</td>
                     <td>{{ faqCategory.name }}</td>
+                    <td><input type="checkbox" {% if faqCategory.enable %}checked{% endif %} data-toggle="toggle" data-onstyle="success" data-offstyle="danger"></td>
                     <td>
-                        <a href="#" class="btn btn-primary">Edit</a>
+                        <a href="{{ path('faq-category-edit', {'id': faqCategory.id}) }}" class="btn btn-primary">Edit</a>
                     </td>
                     <td>
                         <button class="btn btn-danger">Delete</button>
@@ -33,6 +35,49 @@
 
 {% block js %}
 <script>
-    $( "tbody" ).sortable();
+    $('.sortable').sortable({
+        change(event, ui) {
+            const id = ui.item[0].firstElementChild.textContent;
+            const position = ui.placeholder.index();
+            const url = 'http://127.0.0.1:8000/admin/faq-category/change-position/' + id + '/' + position;
+
+            const fd = new FormData();
+
+            const req =  new Request(url, {
+                method:      'POST',
+                body:        fd,
+                mode:        'cors',
+                credentials: 'include'
+            });
+
+            fetch(req)
+                .then(response => response.json())
+                .then(result   => result)
+                .catch(error   => console.error(error))
+            ;
+        },
+        cancel: 'a, button, input'
+    });
+
+    $('input[type=checkbox]').change(e => {
+        const id = e.target.parentElement.parentElement.parentElement.firstElementChild.textContent;
+
+        const url = 'http://127.0.0.1:8000/admin/faq-category/enable/' + id;
+
+        const fd = new FormData();
+
+        const req =  new Request(url, {
+            method:      'POST',
+            body:        fd,
+            mode:        'cors',
+            credentials: 'include'
+        });
+
+        fetch(req)
+            .then(response => response.json())
+            .then(result   => result)
+            .catch(error   => console.error(error))
+        ;
+    });
 </script>
 {% endblock %}

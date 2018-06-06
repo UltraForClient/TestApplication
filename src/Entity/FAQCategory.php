@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FAQCategoryRepository")
@@ -39,7 +40,13 @@ class FAQCategory
     /**
      * @ORM\Column(name="enable", type="boolean")
      */
-    private $enable = true;
+    private $enable;
+
+    /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
 
     /**
      * @ORM\Column(name="published_at", type="datetime")
@@ -61,6 +68,7 @@ class FAQCategory
         $this->publishedAt = new \DateTime();
         $this->updatedAt   = new \DateTime();
         $this->faqs        = new ArrayCollection();
+        $this->enable      = true;
     }
 
     /**
@@ -110,6 +118,16 @@ class FAQCategory
     public function getEnable(): ?bool
     {
         return $this->enable;
+    }
+
+    public function setPosition(int $position): void
+    {
+        $this->position = $position;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
     }
 
     public function getPublishedAt(): ?\DateTimeInterface

@@ -49,9 +49,12 @@ class AppFixtures extends Fixture
 
     private function loadFAQCategories(ObjectManager $em): void
     {
+        $position = 0;
         for($i = 0; $i < static::CATEGORY_NUM; $i++) {
             $faqCategory = new FAQCategory();
             $faqCategory->setName($this->faker->city);
+            $faqCategory->setPosition($position);
+            $position++;
 
             $this->addReference('faqCategory' . $i, $faqCategory);
 
